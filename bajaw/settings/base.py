@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'singer.apps.SingerConfig',
     'playlist.apps.PlaylistConfig',
     'comment.apps.CommentConfig',
+    'sslcommerz.apps.SslcommerzConfig',
 ]
 
 MIDDLEWARE = [

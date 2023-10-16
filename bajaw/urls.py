@@ -25,6 +25,7 @@ urlpatterns = [
     path('',include('song.urls')),
     path('',include('album.urls')),
     path('',include('playlist.urls')),
+    path('pay/',include('sslcommerz.urls')),
 ]
 
 if settings.DEBUG == True:
