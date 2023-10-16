@@ -1,0 +1,65 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %} Playlist {% endblock title %}
+{% block inner_content %}
+<br>
+<div class="container">
+
+  <header class="section-heading">
+    <div class="d-flex justify-content-between">
+    <h3 class="section-title">All Playlists</h3>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create Playlist
+      </button>
+    </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create Playlist</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="create_new_playlist" action="/playlist/create/">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="playlist_name" class="form-label">Playlist  Name</label>
+                      <input type="text" class="form-control" name="playlist_name" id="playlist_name" aria-describedby="create_playlist_help">
+                      <div id="create_playlist_help" class="form-text">Playlist mus be unique</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" form="create_new_playlist" class="btn btn-primary">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </header>
+  <hr>
+
+  <div class="row">
+    {% if playlists %}
+    {% for plylst in playlists %}
+    <div class="col-md-3">
+      <div class="thumbnail">
+        <a href="/playlist/{{plylst.id}}">
+          <img src="{% static 'images/bg.jpg' %}" class="img-responsive" height="200" width="200">
+        </a>
+        <center>
+          <h4 style="margin-left:-50px">{{plylst.playlist_name}}</h4>
+        </center>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>There isn't any playlist! First create new playlist.</p>
+    {% endif %}
+  </div>
+   
+</div>
+
+{% endblock inner_content %}

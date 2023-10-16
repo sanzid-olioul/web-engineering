@@ -1,0 +1,92 @@
+{% extends '../base.html' %}
+{% load static  %}
+{% block title %}
+Songs
+{% endblock title %}
+{% block inner_content %}
+<script>
+  let track_list = [];
+</script>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-12">
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <h3 class="mb-3">{{playlist.playlist_name}}</h3>
+            <div class="d-flex justify-content-between align-items-center">
+            <p class="small mb-0"><span class="mx-2"></span>
+             {{number_of_songs}} Songs<span class="mx-2">|</span> <strong>Created at </strong> {{playlist.date_created}}
+              <i class="fas fa-star fa-lg text-warning"></i> 
+            </p>
+            <button type="button" class="btn btn-outline-dark btn-sm btn-floating">
+              <i class="fas fa-trash" style="color: red; font-size: xx-large;"></i>
+            </button>
+          </div>
+            <hr class="my-4">
+            
+
+            {% for song in songs %}
+                    <div class="d-flex justify-content-between align-items-center p-3 music" onclick="PlayCurrent('{{song.song.id}}')" id="{{song.song.id}}"> 
+                
+                        <div class="d-flex flex-row align-items-center">
+                            <i class="fa fa-music color"></i>
+                            <small class="ml-2 ps-2">{{song.song.song_title}}</small>
+                        </div>
+                        
+                        <script>
+                          track_list.push(
+                              {
+                                  id:"{{song.song.id}}",
+                                  name: "{{song.song.song_title}}",
+                                  artist: "{{song.song.song_album}}",
+                                  image: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+                                  path: "{% get_media_prefix %}{{song.song.song}}"
+                              }
+                          );
+                      </script>
+                        <span >
+                            
+                            {{song.song.song_duration}}
+                            <a class="mx-4" href="{% url 'add_favourite' song.id %}">
+                                {% comment %} <!-- {% if song.liked %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+                                {% else %} --> {% endcomment %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+
+                                {% comment %} <!-- {% endif %} --> {% endcomment %}
+                            </a>
+
+                            <a>
+                              <i class="fas fa-trash" style="color: red;"></i>
+                            </a>
+                        </span>
+                    </div>
+                {% endfor %}
+
+                <script>
+                  function PlayCurrent(id) {
+                      for (let i = 0; i < track_list.length ; i++) {
+                          if(id===track_list[i].id){
+                              track_index= i;
+                              break;
+                          }
+                      }
+                      console.log("I am pressed",track_index)
+                      loadTrack(track_index);
+                      playTrack();
+                  }
+                  </script>
+              </div>
+              {% include '../song_play_footer.html' %} 
+        </div>
+      </div>
+    </div>
+     
+  </div>
+
+  {% endblock inner_content %}

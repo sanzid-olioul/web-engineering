@@ -1,0 +1,151 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %}
+Register
+{% endblock title %}
+{% block inner_content %}
+
+<script>
+  let track_list = [];
+</script>
+
+<section class="vh-100">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-4">
+              <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                  <img src="{% get_media_prefix %}{{album.album_image}}"
+                    alt="Generic placeholder image" class="img-fluid"
+                    style="width: 16rem; border-radius: 10px;">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h5 class="mb-1">{{album.album_name}}</h5>
+                  <p class="mb-2 pb-1" style="height: 9.3rem; overflow: hidden;word-wrap: break-word; color: #2b2a2a;">
+                    <span class="fw-bold">
+                        {{album.album_bio}}
+                    </span>
+                    <br/>
+                    {{album.album_info}}
+                    </p>
+                  
+                  <div class="d-flex pt-1">
+                    <div class="d-flex justify-content-start rounded-3 px-4 py-2 mb-2"
+                    style="background-color: #efefef;">
+                    <div>
+                      <p class="small text-muted mb-1">Articles</p>
+                      <p class="mb-0">41</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Followers</p>
+                      <p class="mb-0">976</p>
+                    </div>
+                    <div>
+                      <p class="small text-muted mb-1">Rating</p>
+                      <p class="mb-0">8.5</p>
+                    </div>
+                  </div>
+                    <button type="button" class="btn btn-outline-primary mx-4 my-2 flex-grow-1">Chat</button>
+                    <button type="button" class="btn btn-primary my-2 flex-grow-1">Follow</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="p-3 card" style="border-radius: 15px;">
+            {% for song in songs %}
+            <div class="d-flex justify-content-between align-items-center p-3 music" > 
+                
+              <div class="d-flex flex-row align-items-center"  onclick="PlayCurrent('{{song.id}}')" id="{{song.id}}">
+                  <i class="fa fa-music color"></i>
+                  <small class="ml-2 ps-2">{{song.song_title}}</small>
+              </div>
+              
+              <script>
+                  track_list.push(
+                      {
+                          id:"{{song.id}}",
+                          name: "{{song.song_title}}",
+                          artist: "{{song.song_album}}",
+                          image: "https://images.pexels.com/photos/1717969/pexels-photo-1717969.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250&w=250",
+                          path: "{% get_media_prefix %}{{song.song}}"
+                      }
+                  );
+              </script>
+              <span >
+                  
+                  {{song.song_duration}}
+                  <a class="mx-4" href="{% url 'add_favourite' song.id %}">
+                      {% comment %} <!-- {% if song.liked %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                      </svg>
+                      {% else %} --> {% endcomment %}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                      </svg>
+
+                      {% comment %} <!-- {% endif %} --> {% endcomment %}
+                  </a>
+
+
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{song.id}}">
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{song.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Create Playlist</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form method="post" id="create_new_playlist" action="http://127.0.0.1:8000/playlist/add/">
+                                  {% csrf_token %}
+                                  <select id="playlist" name="playlist" class="form-select" aria-label="Default select example">
+                                      {% for playlist in playlists %}
+                                      <option value="{{playlist.id}}">{{playlist.playlist_name}}</option>
+                                      {% endfor %}
+                                    </select>
+                                  <input  type="text" value="{{song.id}}" id="song_id" name="song_id">
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" form="create_new_playlist" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+              </span>
+          </div>
+            {% endfor %}
+            <script>
+             function PlayCurrent(id) {
+                 for (let i = 0; i < track_list.length ; i++) {
+                     if(id===track_list[i].id){
+                         track_index= i;
+                         break;
+                     }
+                 }
+                 console.log("I am pressed",track_index)
+                 loadTrack(track_index);
+                 playTrack();
+             }
+             </script>
+            {% include '../song_play_footer.html' %}
+       </div>  
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock inner_content %}

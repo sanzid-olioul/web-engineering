@@ -1,0 +1,156 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Home
+        {% endblock title %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="{% static './icon/icon.png' %}">
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/7706783e59.js" crossorigin="anonymous"></script>
+    {% block link %}
+        
+    {% endblock link %}
+  </head>
+<body>
+    <!-- <nav class="navbar navbar-dark bg-primary"> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="{% static './icon/bajaw.png' %}" alt="Bajaw" style="height: 25px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "albums" %}">Albums</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url "favourite_songs" %}">Favourite</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "playlist:all_playlist" %}">Play Lists</a>
+                </li>
+                
+            </ul>
+            <div class="mx-auto order-0">
+                <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+            {% if user.is_authenticated %}
+                <span class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{user.first_name}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'user_logout' %}">Logout</a></li>
+                </ul>
+            {% else %}
+            <a href='{% url "user_login" %}' class='d-flex px-3 nav-link'>Login</a>
+            {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <section class="h-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-12 col-md-10 col-xs-8">
+                {% block inner_content %}
+                    {% comment %} inner contents will be here {% endcomment %}
+                {% endblock inner_content %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="gradient-custom-2 text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: Social media -->
+          <section class="mb-4">
+            <!-- Facebook -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #3b5998;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+      
+            <!-- Twitter -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #55acee;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+      
+            <!-- Google -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #dd4b39;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-google"></i
+            ></a>
+      
+            <!-- Instagram -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #ac2bac;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+      
+            <!-- Linkedin -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #0082ca;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+            <!-- Github -->
+            <a
+              class="btn text-white btn-floating m-1"
+              style="background-color: #333333;"
+              href="#!"
+              role="button"
+              ><i class="fab fa-github"></i
+            ></a>
+          </section>
+          <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3 gradient-custom-2">
+          © 2023 Copyright:
+          <a class="text-white" href="https://facebook.com/000111T">Sanzid</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <script src="{% static './js/bootstrap.min.js' %}"></script>
+      <script src="{% static './js/main.js' %}"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js" integrity="sha512-HYG9E+RmbXS7oy529Nk8byKFw5jqM3R1zzvoV2JnltsIGkK/AhZSzciYCNxDMOXEbYO9w6MJ6SpuYgm5PJPpeQ==" crossorigin="anonymous"></script>
+</body>
+</html>

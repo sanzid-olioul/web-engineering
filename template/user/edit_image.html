@@ -1,0 +1,47 @@
+{% extends '../base.html' %}
+{% load static  %}
+{% block title %}
+Edit
+{% endblock title %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static './css/icropper.css' %}">
+{% endblock link %}
+
+
+{% block inner_content %}
+        
+        <div id="demo1" class="demoWrapper">
+            <h2>Keep crop area square</h2>
+            <div id="cropperContainer1" class="cropperContainer" >
+                <img id="image_to_edit" src="{% get_media_prefix %}{{profile.avater}}">
+            </div>
+            <div class="previews">
+                <div id="previewSmall1" class="previewSmall"></div>
+                <div id="previewBig1" class="previewBig"></div>
+            </div>
+            <div id="info1" class="info"></div>
+        </div>
+
+        
+   
+        <script src="{% static './js/icropper.js' %}"></script>
+    <script type="text/javascript">
+    var infoNode1 = document.getElementById('info1');
+	var ic1 = new ICropper(
+		'cropperContainer1'
+		,{
+			ratio: 1
+			,image: document.getElementById("image_to_edit").src
+			,onChange: function(info){	//onChange must be set when constructing.
+				infoNode1.innerHTML = 'Left: ' + info.l + 'px, Top: '+info.t
+					+ 'px, Width: ' + info.w + 'px, Height: ' + info.h+'px';
+			}
+		});
+	//use bindPreview to dynamically add preview nodes
+	ic1.bindPreview('previewBig1');
+    console.log(document.getElementById("image_to_edit").src);
+    </script>
+
+    
+{% endblock inner_content %}

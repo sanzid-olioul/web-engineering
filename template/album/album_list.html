@@ -1,0 +1,143 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %}
+Register
+{% endblock title %}
+{% block inner_content %}
+<style>
+    @charset "utf-8";
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open Sans:400,600,800');
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    div,
+    input,
+    p,
+    a {
+        font-family: "Open Sans";
+        margin: 0px;
+    }
+
+    a,
+    a:hover,
+    a:focus {
+        color: inherit;
+    }
+
+    .profile-card-6 {
+        max-width: 300px;
+        background-color: #FFF;
+        border-radius: 5px;
+        box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+        margin: 10px auto;
+        cursor: pointer;
+    }
+
+    .profile-card-6 img {
+        transition: all 0.15s linear;
+    }
+
+    .profile-card-6 .profile-name {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #FFF;
+        padding: 15px 20px;
+        background: linear-gradient(140deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0) 50%);
+        transition: all 0.15s linear;
+    }
+
+    .profile-card-6 .profile-position {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.4);
+        left: 30px;
+        top: 100px;
+        transition: all 0.15s linear;
+    }
+
+    .profile-card-6 .profile-overview {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 50%, rgba(255, 255, 0, 0));
+        color: #FFF;
+        padding: 50px 0px 20px 0px;
+        transition: all 0.15s linear;
+    }
+
+    .profile-card-6 .profile-overview h3 {
+        font-weight: bold;
+    }
+
+    .profile-card-6 .profile-overview p {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .profile-card-6:hover img {
+        filter: brightness(80%);
+    }
+
+    .profile-card-6:hover .profile-name {
+        padding-left: 25px;
+        padding-top: 20px;
+    }
+
+    .profile-card-6:hover .profile-position {
+        left: 40px;
+    }
+
+    .profile-card-6:hover .profile-overview {
+        padding-bottom: 25px;
+    }
+</style>
+
+<div class="row">
+{% for album in albums %}
+
+    <div class="col-md-3" onclick="location.href='{% url 'single_album' album.id %}'" id="{{album.id}}">
+        <div class="profile-card-6"><img style="width:100%;" height="240" src="{% get_media_prefix %}{{album.album_image}}" class="img img-responsive">
+            <div class="profile-name">{{album.album_name}}
+                <br/>
+                {{album.singer}}
+            </div>
+            <div class="profile-position">{{album.album_bio}}</div>
+            <div class="profile-overview">
+                <div class="profile-overview">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h3>{{album.number_of_songs}}</h3>
+                            <p>Songs</p>
+                        </div>
+                        <div class="col-4">
+                            <h3>{{album.number_of_loves}}</h3>
+                            <p>Loves</p>
+                        </div>
+                        <div class="col-4" onclick="location.href='{% url 'love_album' album.id %}'" id="alb-{{album.id}}">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+                            </h3>
+                            <p>Love</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{%endfor%}
+</div>
+
+{% endblock inner_content %}
+
+
+
+

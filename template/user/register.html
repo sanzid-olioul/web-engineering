@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+{% load static  %}
+{% block title %}
+Register
+{% endblock title %}
+{% block inner_content %}
+<div class="main-container my-5">
+    <div class="form-container">
+        <div class="form-body">
+            <h2 class="title">Register</h2>
+            <form method = 'POST' class="the-form">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <span>Already have an account?</span> <a href="{% url 'user_login' %}">Sign In</a>
+    </div>
+</div>
+{% endblock inner_content %}
