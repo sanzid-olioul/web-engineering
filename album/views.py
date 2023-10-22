@@ -4,6 +4,7 @@ from django.db.models import Count
 from .models import Album,AlbumLikedBy
 from song.models import Song
 from user.models import UserProfile
+from comment.models import Review
 # Create your views here.
 class AlbumView(View):
     def get(self,request,*args, **kwargs):
@@ -30,3 +31,17 @@ class LoveAlbumView(View):
         except:
             albums = Album.objects.filter(albumlikedby__user=request.user).annotate(number_of_songs=Count('song')).annotate(number_of_loves=Count('albumlikedby'))
             return render(request,'album/album_list.html',{'albums':albums})
+        
+class CommentView(View):
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        
+        review = request.POST['review']
+        rating = request.POST['star']
+        album_id = request.POST['album_id']
+        album = Album.objects.get(id=album_id)
+
+        Review.objects.create(review=review,reviewer=request.user,rating=rating,content_object=album)
+        
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+    

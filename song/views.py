@@ -15,8 +15,7 @@ class FavouriteSongView(View):
             song = Song.objects.get(pk=song_id)
             remove_fav = SongLikedBy.objects.filter(song=song,user=request.user)
             if len(remove_fav):
-                # remove_fav[0].delete()
-                pass
+                remove_fav[0].delete()
             else:
                 SongLikedBy.objects.create(user=request.user,song=song)
             return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

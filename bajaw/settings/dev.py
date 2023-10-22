@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
     "debug_toolbar",
-    "django-extensions",
+    # "django-extensions",
 ]
 
 MIDDLEWARE +=[
